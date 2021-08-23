@@ -23,15 +23,21 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      #- uses: XiaoMengXinX/Fuck163MusicTasks-Action@
+      - uses: actions/checkout@v2
 
       # Runs a single command using the runners shell
       - name: Download bin
         run: |
           wget https://github.com/XiaoMengXinX/Fuck163MusicTasks/releases/download/v1.0.0/Fuck163MusicTasks_linux_amd64
           chmod 777 ./Fuck163MusicTasks_linux_amd64
+          
+      - name: Export Config
+        env:
+          CONFIG: ${{ secrets.CONFIG }}
+        run: 
+          echo "$CONFIG" > config.json
 
       # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Run Fuck163MusicTasks
         run: |
           ./Fuck163MusicTasks_linux_amd64 -v
